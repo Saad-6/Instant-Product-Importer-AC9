@@ -28,8 +28,15 @@ public class TPIAdminController : AbleAdminController
             response.EnsureSuccessStatusCode();
             string jsonResponse = await response.Content.ReadAsStringAsync();
             List<TvMaze> tvMazeList = JsonConvert.DeserializeObject<List<TvMaze>>(jsonResponse);
+            foreach (var show in tvMazeList) 
+            {
+            if (show.show.image == null)
+            {
+                tvMazeList.Remove(show);
+            }
+            }
 
-            return PartialView("~/Plugins/TPIPlugin/Views/_ShowsList.cshtml");
+            return PartialView("~/Plugins/TPIPlugin/Views/_ShowsList.cshtml",tvMazeList);
         }
 
     }

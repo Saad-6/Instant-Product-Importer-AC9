@@ -9,8 +9,27 @@
             <h5>Search a TV show</h5>
         </div>
         <div class="ibox-content">
-          
+
+            @using (Ajax.BeginForm("GetShow", "TPIAdmin",
+               new AjaxOptions { UpdateTargetId = "shows-list", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" },
+               new { @class = "form-inline" }))
+            {
+                <div class="form-group">
+                    <input type="text" name="query" class="form-control" placeholder="Enter TV show name" style="width: 100%; padding:10px;margin:10px;">
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-left: 10px;"><i class="fa fa-search"></i></button>
+            }
+
+            <div id="shows-list">
+                <p style="display:flex;justify-content:space-around;align-content:center;align-items:center;margin-top:30px;">
+                    Search for a show
+                </p>
+                
+            </div>
+
+
         </div>
+
     </div>
 </div>
 

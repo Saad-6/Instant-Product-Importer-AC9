@@ -101,6 +101,7 @@
     <Content Include="Views\web.config">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Views\_ShowCard.cshtml" />
     <None Include="Views\_ShowsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
