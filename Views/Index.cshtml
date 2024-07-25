@@ -1,45 +1,109 @@
-﻿
+﻿@model BasicProductModel
+
 @{
     ViewBag.Title = "Manage FAQs";
     ViewBag.PageCaption = "Frequently Asked Questions";
 }
+
 <div class="wrapper wrapper-content animated fadeInRight" id="containerId">
     <div class="ibox float-e-margins py-3">
         <div class="ibox-title">
             <h5>Search a TV show</h5>
         </div>
         <div class="ibox-content">
-
-            @using (Ajax.BeginForm("GetShow", "TPIAdmin",
-               new AjaxOptions { UpdateTargetId = "shows-list", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" },
-               new { @class = "form-inline" }))
-            {
-                <div class="form-group">
-                    <input type="text" name="query" class="form-control" placeholder="Enter TV show name" style="width: 100%; padding:10px;margin:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                    @using (Ajax.BeginForm("GetShow", "TPIAdmin", new AjaxOptions { UpdateTargetId = "shows-list", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" }, new { @class = "form-inline" }))
+                    {
+                        <div class="form-group">
+                            <input type="text"id="query" name="query" class="form-control" placeholder="Enter TV show name" style="width: 100%; padding:10px;margin:10px;">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-left: 10px;"><i class="fa fa-search"></i></button>
+                    }
                 </div>
-                <button type="submit" class="btn btn-primary" style="margin-left: 10px;"><i class="fa fa-search"></i></button>
-            }
-
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                    <label class="form-check-label" for="flexCheckChecked">
+                        Select search parameter as Category
+                    </label>
+                </div>
+            </div>
             <div id="shows-list">
                 <p style="display:flex;justify-content:space-around;align-content:center;align-items:center;margin-top:30px;">
                     Search for a show
                 </p>
-                
             </div>
-
-
         </div>
-
     </div>
 </div>
 
+<!-- Add Product Modal -->
+<div class="modal inmodal" id="addProductModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated fadeIn">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Add Product</h4>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("AddNewProduct", "TPIAdmin", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "", OnSuccess = "onProductAdded" }))
+                {
+                    <input type="hidden" name="Name" id="productName" />
+                    <input type="hidden" name="Sku" id="productSku" />
+                    <input type="hidden" name="ImageUrl" id="imageUrl"/>
+                    <input type="hidden" name="CategoryId" value="-1" />
+                    <input type="hidden" name="Description" id="description" />
+
+                    <div class="form-group">
+                        <label for="price" class="col-form-label">Price:</label>
+                        <input type="number" required class="form-control" name="Price" id="price" />
+                    </div>
+                    <div class="form-group">
+                        <label for="cost" class="col-form-label">Cost:</label>
+                        <input type="number" required class="form-control" name="Cost" id="cost" />
+                    </div>
+                    <div class="form-group">
+                        <label for="unit" class="col-form-label">Unit:</label>
+                        <input type="text" required class="form-control" name="Unit" id="unit" />
+                    </div>
+                    <div class="form-group">
+                        <label for="category" class="col-form-label">Category:</label>
+                        <input type="text" class="form-control" name="Category" id="category" />
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add Product</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <script>
         $(document).ready(function () {
-         
-
+            $(document).on('click', '.make-product', function () {
+                var show = $(this).closest('.card').data('show');
+                $('#productName').val(show.name);
+                $('#productSku').val(show.id);
+                $('#description').val(show.summary);
+                $('#imageUrl').val(show.image.medium);
+                var isChecked = $('#flexCheckChecked').is(':checked');
+                if (isChecked) {
+                    var category = $('#query');
+                    $('#category').val(category.val());
+                } else {
+                    $('#category').val('');
+                }
+                $('#addProductModal').modal('show');
+            });
         });
-       
+
+        function onProductAdded() {
+            $("#addProductModal").modal('hide');
+            toastr.success("Converted into a product!");
+        }
     </script>
 }

@@ -38,6 +38,7 @@
     <Reference Include="CommerceBuilder.Web">
       <HintPath>..\Lib\CommerceBuilder.Web.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
@@ -87,6 +88,7 @@
   <ItemGroup>
     <Compile Include="Controllers\TPIRetailController.cs" />
     <Compile Include="Controllers\TPIAdminController.cs" />
+    <Compile Include="Models\BasicProductModel.cs" />
     <Compile Include="Models\PlaceHolderModel.cs" />
     <Compile Include="RouteProvider.cs" />
     <Compile Include="TPIPlugin.cs" />
@@ -110,6 +112,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="PluginManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\AbleCommerce\Website\AbleCommerce.csproj">
+      <Project>{482B9A46-206D-4A84-AAE4-CA54EFE63EF2}</Project>
+      <Name>AbleCommerce</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
