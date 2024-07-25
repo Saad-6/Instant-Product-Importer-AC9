@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PluginManifest>
+	<Name>TPIPlugin</Name>
+	<Title>Third Party Integration</Title>
+	<LogoUrl>
+
+		https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpUYzy9-bal2sDZNX-UsSqKezj1UQ_obQmRA&amp;s
+
+	</LogoUrl>
+	<ConfigUrl>~/Admin/TPI</ConfigUrl>
+	<Description>TPI Plugin Desctiption</Description>
+	<Author>AbleCommerce</Author>
+	<Version>1.0.0</Version>
+	<SupportedVersion>9.0.0</SupportedVersion>
+	<PluginCategory>General</PluginCategory>
+	<PluginTypeName>TPIPlugin.TPIPlugin</PluginTypeName>
+	<PluginAssemblyName>TPIPlugin</PluginAssemblyName>
+	<ShowInAdminMenu>true</ShowInAdminMenu>
+</PluginManifest>

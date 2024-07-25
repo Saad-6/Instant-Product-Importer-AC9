@@ -1,0 +1,130 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\AC9-Samples-master\\AC9-Samples-master\\TPIPlugin\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{29994D8D-7CE3-4A8C-B995-7DE55759A57D}|TPIPlugin.csproj|e:\\ac9-samples-master\\ac9-samples-master\\tpiplugin\\controllers\\tpiadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{29994D8D-7CE3-4A8C-B995-7DE55759A57D}|TPIPlugin.csproj|solutionrelative:controllers\\tpiadmincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29994D8D-7CE3-4A8C-B995-7DE55759A57D}|TPIPlugin.csproj|e:\\ac9-samples-master\\ac9-samples-master\\tpiplugin\\tvmaze.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{29994D8D-7CE3-4A8C-B995-7DE55759A57D}|TPIPlugin.csproj|solutionrelative:tvmaze.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29994D8D-7CE3-4A8C-B995-7DE55759A57D}|TPIPlugin.csproj|e:\\ac9-samples-master\\ac9-samples-master\\tpiplugin\\pluginmanifest.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{29994D8D-7CE3-4A8C-B995-7DE55759A57D}|TPIPlugin.csproj|solutionrelative:pluginmanifest.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29994D8D-7CE3-4A8C-B995-7DE55759A57D}|TPIPlugin.csproj|e:\\ac9-samples-master\\ac9-samples-master\\tpiplugin\\routeprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{29994D8D-7CE3-4A8C-B995-7DE55759A57D}|TPIPlugin.csproj|solutionrelative:routeprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29994D8D-7CE3-4A8C-B995-7DE55759A57D}|TPIPlugin.csproj|e:\\ac9-samples-master\\ac9-samples-master\\tpiplugin\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{29994D8D-7CE3-4A8C-B995-7DE55759A57D}|TPIPlugin.csproj|solutionrelative:app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29994D8D-7CE3-4A8C-B995-7DE55759A57D}|TPIPlugin.csproj|e:\\ac9-samples-master\\ac9-samples-master\\tpiplugin\\tpiplugin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{29994D8D-7CE3-4A8C-B995-7DE55759A57D}|TPIPlugin.csproj|solutionrelative:tpiplugin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TPIAdminController.cs",
+              "DocumentMoniker": "E:\\AC9-Samples-master\\AC9-Samples-master\\TPIPlugin\\Controllers\\TPIAdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\TPIAdminController.cs",
+              "ToolTip": "E:\\AC9-Samples-master\\AC9-Samples-master\\TPIPlugin\\Controllers\\TPIAdminController.cs",
+              "RelativeToolTip": "Controllers\\TPIAdminController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-24T12:33:42.16Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TvMaze.cs",
+              "DocumentMoniker": "E:\\AC9-Samples-master\\AC9-Samples-master\\TPIPlugin\\TvMaze.cs",
+              "RelativeDocumentMoniker": "TvMaze.cs",
+              "ToolTip": "E:\\AC9-Samples-master\\AC9-Samples-master\\TPIPlugin\\TvMaze.cs",
+              "RelativeToolTip": "TvMaze.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-24T12:31:59.449Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PluginManifest.xml",
+              "DocumentMoniker": "E:\\AC9-Samples-master\\AC9-Samples-master\\TPIPlugin\\PluginManifest.xml",
+              "RelativeDocumentMoniker": "PluginManifest.xml",
+              "ToolTip": "E:\\AC9-Samples-master\\AC9-Samples-master\\TPIPlugin\\PluginManifest.xml*",
+              "RelativeToolTip": "PluginManifest.xml*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2024-07-24T12:29:54.822Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RouteProvider.cs",
+              "DocumentMoniker": "E:\\AC9-Samples-master\\AC9-Samples-master\\TPIPlugin\\RouteProvider.cs",
+              "RelativeDocumentMoniker": "RouteProvider.cs",
+              "ToolTip": "E:\\AC9-Samples-master\\AC9-Samples-master\\TPIPlugin\\RouteProvider.cs*",
+              "RelativeToolTip": "RouteProvider.cs*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-24T12:27:17.469Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "app.config",
+              "DocumentMoniker": "E:\\AC9-Samples-master\\AC9-Samples-master\\TPIPlugin\\app.config",
+              "RelativeDocumentMoniker": "app.config",
+              "ToolTip": "E:\\AC9-Samples-master\\AC9-Samples-master\\TPIPlugin\\app.config*",
+              "RelativeToolTip": "app.config*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2024-07-24T12:26:29.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TPIPlugin.cs",
+              "DocumentMoniker": "E:\\AC9-Samples-master\\AC9-Samples-master\\TPIPlugin\\TPIPlugin.cs",
+              "RelativeDocumentMoniker": "TPIPlugin.cs",
+              "ToolTip": "E:\\AC9-Samples-master\\AC9-Samples-master\\TPIPlugin\\TPIPlugin.cs*",
+              "RelativeToolTip": "TPIPlugin.cs*",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-24T12:23:08.973Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
