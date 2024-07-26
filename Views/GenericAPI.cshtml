@@ -1,0 +1,147 @@
+﻿@model APIModel
+
+@{
+    ViewBag.Title = "Generic API";
+    ViewBag.PageCaption = "Configure product API";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight" id="containerId">
+    <div class="ibox float-e-margins py-3">
+        <div class="ibox-title">
+            <h5>Configure API Attributes</h5>
+        </div>
+        <div class="ibox-content">
+            @using (Html.BeginForm("CallApi", "TPIAdmin", FormMethod.Post, new { id = "apiForm" }))
+            {
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="hasParameters" /> Has a Parameter
+                    </label>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ApiUrl, new { @for = "apiUrl" })
+                            @Html.TextBoxFor(model => model.ApiUrl, new { @class = "form-control", @id = "apiUrl", @placeholder = "Enter API URL", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="parameter">Parameter</label>
+                            <input type="text" class="form-control" id="parameter" disabled placeholder="Enter URL parameter" />
+                        </div>
+                    </div>
+                </div>
+
+                <label>Configure API attributes for the following keys:</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ApiResponse.Name, new { @for = "productName" })
+                            @Html.TextBoxFor(model => model.ApiResponse.Name, new { @class = "form-control", @id = "productName", @placeholder = "Enter Product Name Key", @required = "required" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ApiResponse.Price, new { @for = "price" })
+                            @Html.TextBoxFor(model => model.ApiResponse.Price, new { @class = "form-control", @id = "price", @placeholder = "Enter Price Key", @required = "required" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ApiResponse.Image, new { @for = "imageUrl" })
+                            @Html.TextBoxFor(model => model.ApiResponse.Image, new { @class = "form-control", @id = "imageUrl", @placeholder = "Enter Image URL Key", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ApiResponse.Summary, new { @for = "summary" })
+                            @Html.TextBoxFor(model => model.ApiResponse.Summary, new { @class = "form-control", @id = "summary", @placeholder = "Enter Summary Key", @required = "required" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ApiResponse.Description, new { @for = "description" })
+                            @Html.TextBoxFor(model => model.ApiResponse.Description, new { @class = "form-control", @id = "description", @placeholder = "Enter Description Key", @required = "required" })
+                        </div>
+                        <div class="form-group">
+                            <label>View Type</label>
+                            <div>
+                                <label class="radio-inline">
+                                    @Html.RadioButtonFor(model => model.View, "Tabular", new { id = "tabularView", @checked = "checked" }) Tabular View
+                                </label>
+                                <label class="radio-inline">
+                                    @Html.RadioButtonFor(model => model.View, "Grid", new { id = "gridView" }) Grid View
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Call API</button>
+            }
+            @using (Ajax.BeginForm("DemoAPI", "TPIAdmin", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "jsondata", OnSuccess = "$('#demoAPIModal').modal('show');" }))
+            {
+                <div class="row">
+                    <div class="col-md-8">
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input hidden id="ApiUrlParam" name="ApiUrlParam" />
+                            <input hidden id="required-parameter" name="requiredParameter" />
+                            <button type="submit" class="btn btn-warning demo-api">Demo API</button>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Demo API Modal -->
+<div class="modal inmodal" id="demoAPIModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated fadeIn">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">JSON Response</h4>
+            </div>
+            <div class="modal-body">
+                <textarea class="form-control" rows="15" id="jsondata"></textarea>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#hasParameters').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#parameter').prop('disabled', false);
+                } else {
+                    $('#parameter').prop('disabled', true);
+                }
+            });
+
+            $(document).on('click', '.demo-api', function (event) {
+                event.preventDefault();
+                var apiUrl = $('#apiUrl').val();
+                var param = $('#parameter').val();
+                if (apiUrl.trim() === '') {
+                    $('#apiUrl').addClass('is-invalid');
+                    $('#apiUrl').after('<div class="text-danger">API URL is required</div>');
+                    return;
+                } else {
+                    $('#apiUrl').removeClass('is-invalid');
+                    $('#apiUrl').next('.invalid-feedback').remove();
+                }
+                $('#ApiUrlParam').val(apiUrl);
+                $('#required-parameter').val(param);
+                console.log($('#required-parameter').val());
+
+                $(this).closest('form').submit();
+            });
+        });
+    </script>
+}

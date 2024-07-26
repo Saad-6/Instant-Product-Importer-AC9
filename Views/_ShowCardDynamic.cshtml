@@ -1,0 +1,12 @@
+﻿@model JsonArray
+
+<div class="card" style="margin: 20px 10px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;" >
+    <a href="@(Model.JsonObject.ApiResponse.Name)" target="_blank">
+        <img src="@(Model.JsonObject.ApiResponse.Image ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTar_ouGael5ODlrC1kbFbKLpEPSJtTQqdaIg&s")" alt="@(Model.JsonObject.ApiResponse.Name ?? "No name")" style="width: 100%; height: auto;">
+    </a>
+    <h3 class="card-title text-center" style="font-size: 1.25rem; margin-bottom: 10px;">@(Model.JsonObject.ApiResponse.Name ?? "No name")</h3>
+    <div class="card-body" style="padding: 15px; display:flex;justify-content:space-evenly;align-items:center;">
+         </p>
+        <button class="btn btn-success make-product">Make it a Product</button>
+    </div>
+</div>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TPIPlugin.Models
 {
-    public class PlaceHolderModel
+    internal class JointModel
     {
     }
 }

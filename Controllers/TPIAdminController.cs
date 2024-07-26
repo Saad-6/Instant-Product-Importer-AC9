@@ -1,17 +1,17 @@
-﻿using AbleCommerce.Areas.Admin.Models;
-using CommerceBuilder.Catalog;
+﻿using CommerceBuilder.Catalog;
 using CommerceBuilder.Common;
 using CommerceBuilder.Products;
 using CommerceBuilder.Web.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using TPIPlugin;
+using TPIPlugin.Models;
 
 public class TPIAdminController : AbleAdminController
     {
@@ -27,8 +27,40 @@ public class TPIAdminController : AbleAdminController
         public ActionResult Index()
         {
 
-           return View("~/Plugins/TPIPlugin/Views/Index.cshtml");
+           return View("~/Plugins/TPIPlugin/Views/GenericAPI.cshtml");
+                                                
+        }
+        public async Task<ActionResult> DemoAPI(string ApiUrlParam, string requiredParameter)
+    {
+        try
+        {
+            string api;
+            if (string.IsNullOrEmpty(requiredParameter))
+            {
+                api = ApiUrlParam;
+            }
+            else
+            {
+                api = ApiUrlParam + requiredParameter;
+            }
+            HttpResponseMessage response = await _client.GetAsync(api);
+            response.EnsureSuccessStatusCode();
+            string jsonResponse = await response.Content.ReadAsStringAsync();
+            var parsedJson = JToken.Parse(jsonResponse);
+            string formattedJson = parsedJson.ToString(Formatting.Indented);
 
+            return Json(formattedJson);
+        }
+        catch (Exception ex)
+        {
+            return Json( ex.Message+"\n It could be that a parameter was requried and none was given or the API Url was incorrect" );
+        }
+    }
+
+        [HttpPost]
+        public async Task<ActionResult> CallApi(APIModel apiModel)
+        {
+        return View();
         }
         public async Task<ActionResult> GetShow(string query="")
         {
