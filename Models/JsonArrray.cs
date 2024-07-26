@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace TPIPlugin.Models
 {
-    public class ResponseViewModel
+  
+    public class JsonArray
     {
-        public JArray JArray { get; set; }
-        public ApiResponse ApiResponse { get; set; }
+        public JObject JsonObject { get; set; }
+        public MappedResponse MappedResponse { get; set; }
     }
+    
 }

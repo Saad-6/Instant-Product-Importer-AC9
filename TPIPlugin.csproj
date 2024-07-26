@@ -115,10 +115,13 @@
     <Compile Include="Controllers\TPIAdminController.cs" />
     <Compile Include="Models\BasicProductModel.cs" />
     <Compile Include="Models\APIModel.cs" />
+    <Compile Include="Models\JsonArrray.cs" />
+    <Compile Include="Models\JsonEntity.cs" />
     <Compile Include="RouteProvider.cs" />
     <Compile Include="TPIPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TvMaze.cs" />
+    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -129,7 +132,9 @@
     <Content Include="Views\web.config">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Views\_ShowCardDynamic.cshtml" />
     <None Include="Views\_ShowCard.cshtml" />
+    <None Include="Views\_ShowsListDynamic.cshtml" />
     <None Include="Views\_ShowsList.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace TPIPlugin.Models
 {
-    internal class JointModel
+    public class JsonEntity
     {
+        public string EntityName { get; set; }
+        public string Prefix { get; set; }
     }
 }

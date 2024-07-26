@@ -23,12 +23,19 @@
                         <div class="form-group">
                             @Html.LabelFor(model => model.ApiUrl, new { @for = "apiUrl" })
                             @Html.TextBoxFor(model => model.ApiUrl, new { @class = "form-control", @id = "apiUrl", @placeholder = "Enter API URL", @required = "required" })
+                            @if (ViewBag.Error != null)
+                            {
+                                <div class="alert alert-danger">
+                                    @ViewBag.Error
+                                </div>
+                            }
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="parameter">Parameter</label>
-                            <input type="text" class="form-control" id="parameter" disabled placeholder="Enter URL parameter" />
+                           
+                            @Html.TextBoxFor(model => model.ApiResponse.Parameter, new { @class = "form-control", @id = "parameter", @placeholder = "Enter URL Parameter", @disabled = "disabled" })
                         </div>
                     </div>
                 </div>
@@ -73,7 +80,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Call API</button>
+                <button type="submit" class="btn btn-primary callApi">Call API</button>
             }
             @using (Ajax.BeginForm("DemoAPI", "TPIAdmin", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "jsondata", OnSuccess = "$('#demoAPIModal').modal('show');" }))
             {
@@ -142,6 +149,8 @@
 
                 $(this).closest('form').submit();
             });
+
+
         });
     </script>
 }

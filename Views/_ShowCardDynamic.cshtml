@@ -1,12 +1,26 @@
 ﻿@model JsonArray
 
-<div class="card" style="margin: 20px 10px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;" >
-    <a href="@(Model.JsonObject.ApiResponse.Name)" target="_blank">
-        <img src="@(Model.JsonObject.ApiResponse.Image ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTar_ouGael5ODlrC1kbFbKLpEPSJtTQqdaIg&s")" alt="@(Model.JsonObject.ApiResponse.Name ?? "No name")" style="width: 100%; height: auto;">
+@{
+    string namePath = Model.MappedResponse.Name.EntityName;
+    string pricePath = Model.MappedResponse.Price.EntityName;
+    string summaryPath = Model.MappedResponse.Summary.EntityName;
+    string descriptionPath = Model.MappedResponse.Description.EntityName;
+    string imagePath = Model.MappedResponse.Image.EntityName;
+
+    string name = Model.JsonObject.SelectToken(namePath)?.ToString() ?? "No name";
+    string price = Model.JsonObject.SelectToken(pricePath)?.ToString() ?? "No price";
+    string summary = Model.JsonObject.SelectToken(summaryPath)?.ToString() ?? "No summary";
+    string description = Model.JsonObject.SelectToken(descriptionPath)?.ToString() ?? "No description";
+    string image = Model.JsonObject.SelectToken(imagePath)?.ToString() ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTar_ouGael5ODlrC1kbFbKLpEPSJtTQqdaIg&s";
+}
+
+<div class="card" style="margin: 20px 10px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;">
+    <a href="@(image)" target="_blank">
+        <img src="@(image)" style="width: 100%; height: auto;">
     </a>
-    <h3 class="card-title text-center" style="font-size: 1.25rem; margin-bottom: 10px;">@(Model.JsonObject.ApiResponse.Name ?? "No name")</h3>
+    <h3 class="card-title text-center" style="font-size: 1.25rem; margin-bottom: 10px;">@(name)</h3>
     <div class="card-body" style="padding: 15px; display:flex;justify-content:space-evenly;align-items:center;">
-         </p>
+        <p>@(price)</p>
         <button class="btn btn-success make-product">Make it a Product</button>
     </div>
 </div>

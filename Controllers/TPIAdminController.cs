@@ -5,6 +5,7 @@ using CommerceBuilder.Web.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -60,7 +61,74 @@ public class TPIAdminController : AbleAdminController
         [HttpPost]
         public async Task<ActionResult> CallApi(APIModel apiModel)
         {
-        return View();
+        string jsonResponse = "";
+        if (!string.IsNullOrEmpty(apiModel.ApiResponse.Parameter))
+        {
+            apiModel.ApiUrl = apiModel.ApiUrl + apiModel.ApiResponse.Parameter;
+        }
+        try
+        {
+            HttpResponseMessage response = await _client.GetAsync(apiModel.ApiUrl);
+            response.EnsureSuccessStatusCode();
+            jsonResponse = await response.Content.ReadAsStringAsync();
+
+        }
+        catch (Exception ex) {
+
+            ViewBag.Error = ex.Message.ToString();
+            return View("~/Plugins/TPIPlugin/Views/GenericAPI.cshtml");
+
+        }
+        JArray jArray = JArray.Parse(jsonResponse);
+        if (jArray.Count == 0)
+        {
+            ViewBag.Error = "No Results Found";
+            return View("~/Plugins/TPIPlugin/Views/GenericAPI.cshtml");
+        }
+        MappedResponse mappedResponse = new MappedResponse();
+        if (jArray.Count > 0)
+        {
+            mappedResponse.Name = new JsonEntity
+            {
+                EntityName = apiModel.ApiResponse?.Name,
+                Prefix = Utilities.FindNamePropertyPrefix(jArray[0], "", apiModel.ApiResponse?.Name)
+            };
+            mappedResponse.Price = new JsonEntity
+            {
+                EntityName = apiModel.ApiResponse?.Price,
+                Prefix = Utilities.FindNamePropertyPrefix(jArray[0], "", apiModel.ApiResponse?.Price)
+            };
+            mappedResponse.Description = new JsonEntity
+            {
+                EntityName = apiModel.ApiResponse?.Description,
+                Prefix = Utilities.FindNamePropertyPrefix(jArray[0], "", apiModel.ApiResponse?.Description)
+            };
+            mappedResponse.Summary = new JsonEntity
+            {
+                EntityName = apiModel.ApiResponse?.Summary,
+                Prefix = Utilities.FindNamePropertyPrefix(jArray[0], "", apiModel.ApiResponse?.Summary)
+            };
+            mappedResponse.Image = new JsonEntity
+            {
+                EntityName = apiModel.ApiResponse?.Image,
+                Prefix = Utilities.FindNamePropertyPrefix(jArray[0], "", apiModel.ApiResponse?.Image)
+            };
+        }
+        mappedResponse.AddPrefixes();
+   
+        List<JsonArray> list = new List<JsonArray>();
+
+        foreach(JObject item in jArray)
+        {
+            JsonArray jsonArray = new JsonArray();
+            jsonArray.MappedResponse = mappedResponse;
+            jsonArray.JsonObject = item;
+            list.Add(jsonArray);
+        }
+      
+        
+        return View("~/Plugins/TPIPlugin/Views/_ShowsListDynamic.cshtml", list);
+
         }
         public async Task<ActionResult> GetShow(string query="")
         {
