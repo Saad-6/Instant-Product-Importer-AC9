@@ -9,8 +9,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Xml.Linq;
 using TPIPlugin;
 using TPIPlugin.Models;
 
@@ -32,102 +34,114 @@ public class TPIAdminController : AbleAdminController
                                                 
         }
         public async Task<ActionResult> DemoAPI(string ApiUrlParam, string requiredParameter)
-    {
+        {
         try
         {
-            string api;
-            if (string.IsNullOrEmpty(requiredParameter))
+            // Generate cache key based on parameters
+            string cacheKey = $"{ApiUrlParam}_{requiredParameter}";
+
+            // Check if the result is in the cache
+            if (Cache[cacheKey] is string cachedJsonResponse)
             {
-                api = ApiUrlParam;
+                // Return cached response
+                return Json(cachedJsonResponse);
             }
-            else
-            {
-                api = ApiUrlParam + requiredParameter;
-            }
+
+            // Build the API URL
+            string api = string.IsNullOrEmpty(requiredParameter) ? ApiUrlParam : ApiUrlParam + requiredParameter;
+
+            // Make the API call
             HttpResponseMessage response = await _client.GetAsync(api);
             response.EnsureSuccessStatusCode();
             string jsonResponse = await response.Content.ReadAsStringAsync();
             var parsedJson = JToken.Parse(jsonResponse);
             string formattedJson = parsedJson.ToString(Formatting.Indented);
 
+            // Cache the result with a sliding expiration of 10 minutes
+            CacheItemPolicy policy = new CacheItemPolicy
+            {
+                SlidingExpiration = TimeSpan.FromMinutes(10)
+            };
+            object v = Cache.Add(cacheKey, formattedJson, policy);
+
+            // Return the formatted JSON response
             return Json(formattedJson);
         }
         catch (Exception ex)
         {
-            return Json( ex.Message+"\n It could be that a parameter was requried and none was given or the API Url was incorrect" );
+            return Json(ex.Message + "\n It could be that a parameter was required and none was given or the API URL was incorrect");
         }
     }
+
+
 
         [HttpPost]
         public async Task<ActionResult> CallApi(APIModel apiModel)
         {
+        // Declarations
         string jsonResponse = "";
+        JArray jArray;
+        JObject jObject;
+        JToken parsedJson;
+        JObjectMapped jObjectMapped;
+        string view = apiModel.View;
+        MappedResponse mappedResponse = new MappedResponse();
+
         if (!string.IsNullOrEmpty(apiModel.ApiResponse.Parameter))
         {
             apiModel.ApiUrl = apiModel.ApiUrl + apiModel.ApiResponse.Parameter;
         }
+        // Calling the API
         try
         {
             HttpResponseMessage response = await _client.GetAsync(apiModel.ApiUrl);
             response.EnsureSuccessStatusCode();
             jsonResponse = await response.Content.ReadAsStringAsync();
+            parsedJson = JToken.Parse(jsonResponse);
 
         }
         catch (Exception ex) {
 
             ViewBag.Error = ex.Message.ToString();
             return View("~/Plugins/TPIPlugin/Views/GenericAPI.cshtml");
+        }
+        // Checking if the data returned isa single json object
+        if(parsedJson is JObject)
+        {
+            jObject = JObject.Parse(jsonResponse);
+            mappedResponse = Utilities.GetMappedResponse(apiModel, jObject);
+            jObjectMapped = new JObjectMapped(); 
+            jObjectMapped.JsonObject = jObject;
+            jObjectMapped.MappedResponse = mappedResponse;
+            return View("~/Plugins/TPIPlugin/Views/Single.cshtml",jObjectMapped);
 
         }
-        JArray jArray = JArray.Parse(jsonResponse);
+        // If the data is an array of objects
+        jArray = JArray.Parse(jsonResponse);
+         
         if (jArray.Count == 0)
         {
             ViewBag.Error = "No Results Found";
             return View("~/Plugins/TPIPlugin/Views/GenericAPI.cshtml");
         }
-        MappedResponse mappedResponse = new MappedResponse();
-        if (jArray.Count > 0)
-        {
-            mappedResponse.Name = new JsonEntity
-            {
-                EntityName = apiModel.ApiResponse?.Name,
-                Prefix = Utilities.FindNamePropertyPrefix(jArray[0], "", apiModel.ApiResponse?.Name)
-            };
-            mappedResponse.Price = new JsonEntity
-            {
-                EntityName = apiModel.ApiResponse?.Price,
-                Prefix = Utilities.FindNamePropertyPrefix(jArray[0], "", apiModel.ApiResponse?.Price)
-            };
-            mappedResponse.Description = new JsonEntity
-            {
-                EntityName = apiModel.ApiResponse?.Description,
-                Prefix = Utilities.FindNamePropertyPrefix(jArray[0], "", apiModel.ApiResponse?.Description)
-            };
-            mappedResponse.Summary = new JsonEntity
-            {
-                EntityName = apiModel.ApiResponse?.Summary,
-                Prefix = Utilities.FindNamePropertyPrefix(jArray[0], "", apiModel.ApiResponse?.Summary)
-            };
-            mappedResponse.Image = new JsonEntity
-            {
-                EntityName = apiModel.ApiResponse?.Image,
-                Prefix = Utilities.FindNamePropertyPrefix(jArray[0], "", apiModel.ApiResponse?.Image)
-            };
-        }
-        mappedResponse.AddPrefixes();
-   
-        List<JsonArray> list = new List<JsonArray>();
+        mappedResponse = Utilities.GetMappedResponse(apiModel, jArray[0].ToObject<JObject>());
+       
+        List<JObjectMapped> mappedlist = new List<JObjectMapped>();
 
         foreach(JObject item in jArray)
         {
-            JsonArray jsonArray = new JsonArray();
+            JObjectMapped jsonArray = new JObjectMapped();
             jsonArray.MappedResponse = mappedResponse;
             jsonArray.JsonObject = item;
-            list.Add(jsonArray);
+            mappedlist.Add(jsonArray);
         }
-      
+
+        if (apiModel.View == "Tabular")
+        {
+            return View("~/Plugins/TPIPlugin/Views/Tabular.cshtml", mappedlist);
+        }
         
-        return View("~/Plugins/TPIPlugin/Views/_ShowsListDynamic.cshtml", list);
+        return View("~/Plugins/TPIPlugin/Views/_ShowsListDynamic.cshtml", mappedlist);
 
         }
         public async Task<ActionResult> GetShow(string query="")

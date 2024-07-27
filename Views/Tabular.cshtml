@@ -1,0 +1,71 @@
+﻿@model List<JObjectMapped>
+
+@{
+    ViewBag.Title = "TVMaze API";
+    ViewBag.PageCaption = "Search for a TV Show";
+
+    bool hasProducts = Model != null && Model.Count > 0;
+}
+
+<div class="wrapper wrapper-content animated fadeInRight" id="containerId">
+    <div class="ibox float-e-margins py-3">
+        <div class="ibox-title">
+            <h5>Search a TV show</h5>
+        </div>
+        <div class="ibox-content">
+            @if (hasProducts)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>SKU</th>
+                            <th>Price</th>
+                            <th>Cost</th>
+                            <th>Unit</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model)
+                        {
+                            string namePath = product.MappedResponse.Name.EntityName;
+                            string pricePath = product.MappedResponse.Price.EntityName;
+                            string descriptionPath = product.MappedResponse.Description.EntityName;
+
+                            string imagePath = product.MappedResponse.Image.EntityName;
+                            string name = product.JsonObject.SelectToken(namePath)?.ToString() ?? "No name";
+                            string price = product.JsonObject.SelectToken(pricePath)?.ToString() ?? "No price";
+                            string description = product.JsonObject.SelectToken(descriptionPath)?.ToString() ?? "No description";
+                            string image = product.JsonObject.SelectToken(imagePath)?.ToString() ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTar_ouGael5ODlrC1kbFbKLpEPSJtTQqdaIg&s";
+
+                            <tr>
+                                <td>@(name)</td>
+                                <td>@("SKU Placeholder")</td>
+                                <td>@(price)</td>
+                                <td>@("Cost Placeholder")</td>
+                                <td>@("Unit Placeholder")</td>
+                                <td>@("Category Placeholder")</td>
+                                <td>@(description)</td>
+                                <td><img src="@(image)" style="width: 100px; height: auto;"></td>
+                                <td>
+                                    <button class="btn btn-success make-product" data-toggle="modal" data-target="#addProductModal" data-name="@name" data-sku="SKU Placeholder" data-description="@description" data-image="@image">Make it a Product</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div style="display: flex; justify-content: space-around; align-content: center; align-items: center; margin-top: 30px;">
+                    <p>No Results found</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

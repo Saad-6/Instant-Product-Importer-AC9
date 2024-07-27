@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace TPIPlugin.Models
 {
   
-    public class JsonArray
+    public class JObjectMapped
     {
         public JObject JsonObject { get; set; }
         public MappedResponse MappedResponse { get; set; }

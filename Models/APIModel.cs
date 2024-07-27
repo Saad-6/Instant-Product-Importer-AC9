@@ -27,25 +27,13 @@
 
         public void AddPrefixes()
         {
-            if (!string.IsNullOrEmpty(Name.Prefix))
+            foreach (var property in this.GetType().GetProperties())
             {
-                Name.EntityName = Name.Prefix + "." + Name.EntityName;
-            }
-            if (!string.IsNullOrEmpty(Description.Prefix))
-            {
-                Description.EntityName = Description.Prefix + "." + Description.EntityName;
-            }
-            if (!string.IsNullOrEmpty(Price.Prefix))
-            {
-                Price.EntityName = Price.Prefix + "." + Price.EntityName;
-            }
-            if (!string.IsNullOrEmpty(Summary.Prefix))
-            {
-                Summary.EntityName = Summary.Prefix + "." + Summary.EntityName;
-            }
-            if (!string.IsNullOrEmpty(Image.Prefix))
-            {
-                Image.EntityName = Image.Prefix + "." + Image.EntityName;
+                    JsonEntity entity = (JsonEntity)property.GetValue(this);
+                    if (entity != null && !string.IsNullOrEmpty(entity.Prefix))
+                    {
+                        entity.EntityName = entity.Prefix + "." + entity.EntityName;
+                    }               
             }
         }
     }

@@ -4,11 +4,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TPIPlugin.Models;
 
 namespace TPIPlugin
 {
     public static class Utilities
     {
+        public static MappedResponse GetMappedResponse(APIModel apiModel,JObject jObject)
+        {
+            MappedResponse mappedResponse = new MappedResponse();
+            mappedResponse.Name = new JsonEntity
+            {
+                EntityName = apiModel.ApiResponse?.Name,
+                Prefix = Utilities.FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Name)
+            };
+            mappedResponse.Price = new JsonEntity
+            {
+                EntityName = apiModel.ApiResponse?.Price,
+                Prefix = Utilities.FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Price)
+            };
+            mappedResponse.Description = new JsonEntity
+            {
+                EntityName = apiModel.ApiResponse?.Description,
+                Prefix = Utilities.FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Description)
+            };
+            mappedResponse.Summary = new JsonEntity
+            {
+                EntityName = apiModel.ApiResponse?.Summary,
+                Prefix = Utilities.FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Summary)
+            };
+            mappedResponse.Image = new JsonEntity
+            {
+                EntityName = apiModel.ApiResponse?.Image,
+                Prefix = Utilities.FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Image)
+            };
+            mappedResponse.AddPrefixes();
+            return mappedResponse;
+        }
         public static string FindNamePropertyPrefix(JToken token, string currentPath = "",string findBy = "name")
         {
             if (token.Type == JTokenType.Object)

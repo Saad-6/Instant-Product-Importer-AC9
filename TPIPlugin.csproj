@@ -115,7 +115,7 @@
     <Compile Include="Controllers\TPIAdminController.cs" />
     <Compile Include="Models\BasicProductModel.cs" />
     <Compile Include="Models\APIModel.cs" />
-    <Compile Include="Models\JsonArrray.cs" />
+    <Compile Include="Models\JOjectMapped.cs" />
     <Compile Include="Models\JsonEntity.cs" />
     <Compile Include="RouteProvider.cs" />
     <Compile Include="TPIPlugin.cs" />
@@ -132,6 +132,8 @@
     <Content Include="Views\web.config">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Views\Single.cshtml" />
+    <None Include="Views\Tabular.cshtml" />
     <None Include="Views\_ShowCardDynamic.cshtml" />
     <None Include="Views\_ShowCard.cshtml" />
     <None Include="Views\_ShowsListDynamic.cshtml" />
