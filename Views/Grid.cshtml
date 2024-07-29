@@ -1,0 +1,81 @@
+﻿@model  List<JObjectMapped>
+
+@{
+    ViewBag.Title = "Generic API";
+    ViewBag.PageCaption = "Products";
+
+    bool hasProducts = Model != null && Model.Count > 0;
+}
+
+@if (hasProducts)
+{
+    <div class="wrapper wrapper-content animated fadeInRight" id="containerId">
+        <div class="ibox float-e-margins py-3">
+            <div class="ibox-title">
+                <h5>List of Products</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    @foreach (var model in Model)
+                    {
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            @Html.Partial("~/Plugins/TPIPlugin/Views/_ProductCard.cshtml", model)
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="wrapper wrapper-content animated fadeInRight" id="containerId">
+        <div class="ibox float-e-margins py-3">
+            <div class="ibox-title">
+                <h5>List of Products</h5>
+            </div>
+            <div class="ibox-content">
+                <div style="display: flex; justify-content: space-around; align-content: center; align-items: center; margin-top: 30px;">
+                    <p>No Results found</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@Html.Partial("~/Plugins/TPIPlugin/Views/_AddProductModal.cshtml")
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.make-product', function () {
+                var name = $(this).data('name');
+                var sku = $(this).data('sku');
+                var price = $(this).data('price');
+                var cost = $(this).data('cost');
+                var unit = $(this).data('unit');
+                var category = $(this).data('category');
+                var description = $(this).data('description');
+                var image = $(this).data('image');
+
+                $('#productName').val(name);
+                $('#price').val(price);
+                $('#description').val(description);
+                $('#imageUrl').val(image);
+
+                var isChecked = $('#flexCheckChecked').is(':checked');
+                if (isChecked) {
+                    $('#category').val($('#query').val());
+                } else {
+                    $('#category').val(category);
+                }
+                $('#addProductModal').modal('show');
+            });
+        });
+
+        function onProductAdded() {
+            $("#addProductModal").modal('hide');
+            toastr.success("Converted into a product!");
+        }
+    </script>
+}

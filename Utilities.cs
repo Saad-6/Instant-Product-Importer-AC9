@@ -1,9 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TPIPlugin.Models;
 
 namespace TPIPlugin
@@ -16,32 +12,32 @@ namespace TPIPlugin
             mappedResponse.Name = new JsonEntity
             {
                 EntityName = apiModel.ApiResponse?.Name,
-                Prefix = Utilities.FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Name)
+                Prefix = FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Name)
             };
             mappedResponse.Price = new JsonEntity
             {
                 EntityName = apiModel.ApiResponse?.Price,
-                Prefix = Utilities.FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Price)
+                Prefix = FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Price)
             };
             mappedResponse.Description = new JsonEntity
             {
                 EntityName = apiModel.ApiResponse?.Description,
-                Prefix = Utilities.FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Description)
+                Prefix = FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Description)
             };
             mappedResponse.Summary = new JsonEntity
             {
                 EntityName = apiModel.ApiResponse?.Summary,
-                Prefix = Utilities.FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Summary)
+                Prefix = FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Summary)
             };
             mappedResponse.Image = new JsonEntity
             {
                 EntityName = apiModel.ApiResponse?.Image,
-                Prefix = Utilities.FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Image)
+                Prefix = FindNamePropertyPrefix(jObject, "", apiModel.ApiResponse?.Image)
             };
             mappedResponse.AddPrefixes();
             return mappedResponse;
         }
-        public static string FindNamePropertyPrefix(JToken token, string currentPath = "",string findBy = "name")
+        public static string FindNamePropertyPrefix(JToken token, string currentPath = "", string findBy = "name")
         {
             if (token.Type == JTokenType.Object)
             {
@@ -50,7 +46,7 @@ namespace TPIPlugin
                     var newPath = string.IsNullOrEmpty(currentPath) ? property.Name : $"{currentPath}.{property.Name}";
                     if (property.Name.Equals(findBy, StringComparison.OrdinalIgnoreCase))
                     {
-                        return currentPath; // Return the path without appending 'name'
+                        return currentPath; // Return the path 
                     }
                     var result = FindNamePropertyPrefix(property.Value, newPath, findBy);
                     if (result != null)

@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Generic API";
-    ViewBag.PageCaption = "Configure product API";
+    ViewBag.PageCaption = "Configure API";
 }
 
 <div class="wrapper wrapper-content animated fadeInRight" id="containerId">
@@ -13,57 +13,39 @@
         <div class="ibox-content">
             @using (Html.BeginForm("CallApi", "TPIAdmin", FormMethod.Post, new { id = "apiForm" }))
             {
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="hasParameters" /> Has a Parameter
-                    </label>
-                </div>
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
                             @Html.LabelFor(model => model.ApiUrl, new { @for = "apiUrl" })
                             @Html.TextBoxFor(model => model.ApiUrl, new { @class = "form-control", @id = "apiUrl", @placeholder = "Enter API URL", @required = "required" })
-                            @if (ViewBag.Error != null)
-                            {
-                                <div class="alert alert-danger">
-                                    @ViewBag.Error
-                                </div>
-                            }
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label for="parameter">Parameter</label>
-                           
-                            @Html.TextBoxFor(model => model.ApiResponse.Parameter, new { @class = "form-control", @id = "parameter", @placeholder = "Enter URL Parameter", @disabled = "disabled" })
+                            <div id="apiUrlError" class="text-danger" style="display: none;">API URL is required</div> <!-- Validation message placeholder -->
                         </div>
                     </div>
                 </div>
-
-                <label>Configure API attributes for the following keys:</label>
+                <label>Map JSON Keys to Attributes:</label>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             @Html.LabelFor(model => model.ApiResponse.Name, new { @for = "productName" })
-                            @Html.TextBoxFor(model => model.ApiResponse.Name, new { @class = "form-control", @id = "productName", @placeholder = "Enter Product Name Key", @required = "required" })
+                            @Html.TextBoxFor(model => model.ApiResponse.Name, new { @class = "form-control", @id = "productName", @placeholder = " Product Name Key ; Default key is 'name' " })
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.ApiResponse.Price, new { @for = "price" })
-                            @Html.TextBoxFor(model => model.ApiResponse.Price, new { @class = "form-control", @id = "price", @placeholder = "Enter Price Key", @required = "required" })
+                            @Html.TextBoxFor(model => model.ApiResponse.Price, new { @class = "form-control", @id = "price", @placeholder = " Price Key ; Default key is 'price' " })
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.ApiResponse.Image, new { @for = "imageUrl" })
-                            @Html.TextBoxFor(model => model.ApiResponse.Image, new { @class = "form-control", @id = "imageUrl", @placeholder = "Enter Image URL Key", @required = "required" })
+                            @Html.TextBoxFor(model => model.ApiResponse.Image, new { @class = "form-control", @id = "imageUrl", @placeholder = " Image URL Key ; Default key is 'image' " })
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             @Html.LabelFor(model => model.ApiResponse.Summary, new { @for = "summary" })
-                            @Html.TextBoxFor(model => model.ApiResponse.Summary, new { @class = "form-control", @id = "summary", @placeholder = "Enter Summary Key", @required = "required" })
+                            @Html.TextBoxFor(model => model.ApiResponse.Summary, new { @class = "form-control", @id = "summary", @placeholder = " Summary Key ; Default key is 'summary' " })
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.ApiResponse.Description, new { @for = "description" })
-                            @Html.TextBoxFor(model => model.ApiResponse.Description, new { @class = "form-control", @id = "description", @placeholder = "Enter Description Key", @required = "required" })
+                            @Html.TextBoxFor(model => model.ApiResponse.Description, new { @class = "form-control", @id = "description", @placeholder = " Description Key ; Default key is 'description'" })
                         </div>
                         <div class="form-group">
                             <label>View Type</label>
@@ -76,27 +58,18 @@
                                 </label>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
                 <button type="submit" class="btn btn-primary callApi">Call API</button>
             }
-            @using (Ajax.BeginForm("DemoAPI", "TPIAdmin", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "jsondata", OnSuccess = "$('#demoAPIModal').modal('show');" }))
+
+            @using (Ajax.BeginForm("DemoAPI", "TPIAdmin", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "jsondata", OnSuccess = "$('#demoAPIModal').modal('show');" },
+                new { id = "demoApiForm", @class = "form-inline" }))
             {
-                <div class="row">
-                    <div class="col-md-8">
+                @Html.Hidden("ApiUrlParam", "", new { id = "ApiUrlParam" }) <!-- Hidden field for API URL -->
 
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <input hidden id="ApiUrlParam" name="ApiUrlParam" />
-                            <input hidden id="required-parameter" name="requiredParameter" />
-                            <button type="submit" class="btn btn-warning demo-api">Demo API</button>
-                        </div>
-
-                    </div>
-                </div>
+                <button type="button" class="btn btn-warning demo-api">Demo API</button>
+                <div id="apiUrlDemoError" class="text-danger" style="display: none;">API URL is required</div> <!-- Validation message placeholder -->
             }
         </div>
     </div>
@@ -123,34 +96,34 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $('#hasParameters').change(function () {
-                if ($(this).is(':checked')) {
-                    $('#parameter').prop('disabled', false);
-                } else {
-                    $('#parameter').prop('disabled', true);
-                }
-            });
-
             $(document).on('click', '.demo-api', function (event) {
                 event.preventDefault();
-                var apiUrl = $('#apiUrl').val();
-                var param = $('#parameter').val();
-                if (apiUrl.trim() === '') {
-                    $('#apiUrl').addClass('is-invalid');
-                    $('#apiUrl').after('<div class="text-danger">API URL is required</div>');
-                    return;
-                } else {
-                    $('#apiUrl').removeClass('is-invalid');
-                    $('#apiUrl').next('.invalid-feedback').remove();
-                }
-                $('#ApiUrlParam').val(apiUrl);
-                $('#required-parameter').val(param);
-                console.log($('#required-parameter').val());
 
-                $(this).closest('form').submit();
+                var apiUrl = $('#apiUrl').val().trim(); // Get the value and trim whitespace
+                if (apiUrl === '') {
+                    // Show error message if API URL is empty
+                    $('#apiUrl').addClass('is-invalid');
+                    $('#apiUrlDemoError').show(); // Show the validation message
+                    return false;
+                } else {
+                    // Hide error message and remove class if API URL is not empty
+                    $('#apiUrl').removeClass('is-invalid');
+                    $('#apiUrlDemoError').hide(); // Hide the validation message
+
+                    // Set the hidden field value and submit the AJAX form
+                    $('#ApiUrlParam').val(apiUrl);
+                    $('#demoApiForm').submit(); // Submit the form
+                }
             });
 
-
+            // Remove the error message when the user starts typing
+            $('#apiUrl').on('input', function () {
+                var apiUrl = $(this).val().trim();
+                if (apiUrl !== '') {
+                    $('#apiUrl').removeClass('is-invalid');
+                    $('#apiUrlDemoError').hide(); // Hide the validation message
+                }
+            });
         });
     </script>
 }

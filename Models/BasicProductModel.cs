@@ -14,7 +14,4 @@ public class BasicProductModel
         public string Unit { get; set; }
         public int CatrgoryId  { get; set; }
 
-        
-
-
     }

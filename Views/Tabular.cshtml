@@ -1,16 +1,21 @@
 ﻿@model List<JObjectMapped>
 
 @{
-    ViewBag.Title = "TVMaze API";
-    ViewBag.PageCaption = "Search for a TV Show";
+    ViewBag.Title = "Generic API";
+    ViewBag.PageCaption = "Products";
 
     bool hasProducts = Model != null && Model.Count > 0;
+
+    string namePath = Model[0].MappedResponse.Name.EntityName;
+    string pricePath = Model[0].MappedResponse.Price.EntityName;
+    string descriptionPath = Model[0].MappedResponse.Description.EntityName;
+    string imagePath = Model[0].MappedResponse.Image.EntityName;
 }
 
 <div class="wrapper wrapper-content animated fadeInRight" id="containerId">
     <div class="ibox float-e-margins py-3">
         <div class="ibox-title">
-            <h5>Search a TV show</h5>
+            <h5>List of Products</h5>
         </div>
         <div class="ibox-content">
             @if (hasProducts)
@@ -19,11 +24,9 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>SKU</th>
+                        
                             <th>Price</th>
-                            <th>Cost</th>
-                            <th>Unit</th>
-                            <th>Category</th>
+                        >
                             <th>Description</th>
                             <th>Image</th>
                             <th>Actions</th>
@@ -32,11 +35,8 @@
                     <tbody>
                         @foreach (var product in Model)
                         {
-                            string namePath = product.MappedResponse.Name.EntityName;
-                            string pricePath = product.MappedResponse.Price.EntityName;
-                            string descriptionPath = product.MappedResponse.Description.EntityName;
 
-                            string imagePath = product.MappedResponse.Image.EntityName;
+
                             string name = product.JsonObject.SelectToken(namePath)?.ToString() ?? "No name";
                             string price = product.JsonObject.SelectToken(pricePath)?.ToString() ?? "No price";
                             string description = product.JsonObject.SelectToken(descriptionPath)?.ToString() ?? "No description";
@@ -44,15 +44,17 @@
 
                             <tr>
                                 <td>@(name)</td>
-                                <td>@("SKU Placeholder")</td>
+                            
                                 <td>@(price)</td>
-                                <td>@("Cost Placeholder")</td>
-                                <td>@("Unit Placeholder")</td>
-                                <td>@("Category Placeholder")</td>
+                             
                                 <td>@(description)</td>
-                                <td><img src="@(image)" style="width: 100px; height: auto;"></td>
+                                <td><img src="@(image)" style="width: 100px; height: 100px;"></td>
                                 <td>
-                                    <button class="btn btn-success make-product" data-toggle="modal" data-target="#addProductModal" data-name="@name" data-sku="SKU Placeholder" data-description="@description" data-image="@image">Make it a Product</button>
+                                    <button class="btn btn-success make-product" data-toggle="modal" data-target="#addProductModal"
+                                            data-name="@name" data-sku="SKU Placeholder" data-price="@price" data-cost="Cost Placeholder"
+                                            data-unit="Unit Placeholder" data-category="Category Placeholder" data-description="@description" data-image="@image">
+                                        Make it a Product
+                                    </button>
                                 </td>
                             </tr>
                         }
@@ -69,3 +71,43 @@
     </div>
 </div>
 
+@Html.Partial("~/Plugins/TPIPlugin/Views/_AddProductModal.cshtml")
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.make-product', function () {
+                var name = $(this).data('name');
+                var sku = $(this).data('sku');
+                var price = $(this).data('price');
+                var cost = $(this).data('cost');
+                var unit = $(this).data('unit');
+                var category = $(this).data('category');
+                var description = $(this).data('description');
+                var image = $(this).data('image');
+
+                $('#productName').val(name);
+                $('#productSku').val(sku);
+                $('#price').val(price);
+                $('#cost').val(cost);
+                $('#unit').val(unit);
+                $('#category').val(category);
+                $('#description').val(description);
+                $('#imageUrl').val(image);
+
+                var isChecked = $('#flexCheckChecked').is(':checked');
+                if (isChecked) {
+                    $('#category').val($('#query').val());
+                } else {
+                    $('#category').val(category);
+                }
+                $('#addProductModal').modal('show');
+            });
+        });
+
+        function onProductAdded() {
+            $("#addProductModal").modal('hide');
+            toastr.success("Converted into a product!");
+        }
+    </script>
+}

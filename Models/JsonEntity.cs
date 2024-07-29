@@ -10,5 +10,11 @@ namespace TPIPlugin.Models
     {
         public string EntityName { get; set; }
         public string Prefix { get; set; }
+
+        public JsonEntity() {
+
+         
+
+        }
     }
 }
