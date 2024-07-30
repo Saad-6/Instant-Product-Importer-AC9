@@ -14,14 +14,15 @@ The Universal API Product Integrator is a powerful plugin that allows you to sea
 
 **1.** Download: Download the zip file from the build folder.  
 **2.** Paste: Paste the zip file into the Ablecommerce/Website/Plugins directory.  
-**3.** Install: Go to the admin dashboard, navigate to the plugins tab, and find the FAQ Plugin under the general category. Click on install.  
+**3.** Install: Go to the admin dashboard, navigate to the plugins tab, and find the TPI Plugin under the general category. Click on install.  
 
 ## Usage
 Access the Plugin:
 
 **1**  Navigate to TPI : Go to the Third Party Tab in the admin dashboard to access the TPI management interface.
 **2**  Define API URL:  
-    * Enter the API URL that you wish to consume.
+    * Enter the API URL that you wish to consume.  
+    
     * Map JSON Keys: Use the provided form to define the JSON keys for product attributes such as name, price, description, and image.
 Fetch and Map Data:
 
