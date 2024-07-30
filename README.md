@@ -19,12 +19,12 @@ The Universal API Product Integrator is a powerful plugin that allows you to sea
 ## Usage
 Access the Plugin:
 
-**1.**  Navigate to TPI : Go to the Third Party Tab in the admin dashboard to access the TPI management interface.
+**1.**  Navigate to TPI : Go to the Third Party Tab in the admin dashboard to access the TPI management interface.  
 **2.**  Define API URL:  
     * Enter the API URL that you wish to consume.  
     * Map JSON Keys: Use the provided form to define the JSON keys for product attributes such as name, price, description, and image.
-Fetch and Map Data:
+Fetch and Map Data:  
 
-**3.** Call the API and view the mapped data in various formats (e.g., Grid, Tabular, Singular).
+**3.** Call the API and view the mapped data in various formats (e.g., Grid, Tabular, Singular).  
 **4.** Add Products to Store:
 Use the mapped data to add new products to your store. The plugin will automatically map the entites and create categories if they do not exist.
