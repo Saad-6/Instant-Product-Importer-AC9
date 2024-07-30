@@ -87,19 +87,15 @@
                 var image = $(this).data('image');
 
                 $('#productName').val(name);
-                $('#productSku').val(sku);
                 $('#price').val(price);
-                $('#cost').val(cost);
-                $('#unit').val(unit);
-                $('#category').val(category);
                 $('#description').val(description);
                 $('#imageUrl').val(image);
 
                 var isChecked = $('#flexCheckChecked').is(':checked');
                 if (isChecked) {
-                    $('#category').val($('#query').val());
+                  
                 } else {
-                    $('#category').val(category);
+                  
                 }
                 $('#addProductModal').modal('show');
             });

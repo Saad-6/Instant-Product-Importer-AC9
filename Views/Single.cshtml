@@ -10,15 +10,22 @@
     string name =  Model.JsonObject.SelectToken(namePath)?.ToString() ?? "No name";
     string price = Model.JsonObject.SelectToken(pricePath)?.ToString() ?? "No price";
     string image = Model.JsonObject.SelectToken(imagePath)?.ToString() ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTar_ouGael5ODlrC1kbFbKLpEPSJtTQqdaIg&s";
+    string description = Model.JsonObject.SelectToken(descriptionPath).ToString() ?? "No Description";
 }
 
-<div class="card" style="margin: 20px 10px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden;" data-show=''>
-    <a href="@image" target="_blank">
-        <img src="@image" style="width: 100%; height: auto;">
+<div class="card" style="margin: 20px 10px; border: 1px solid #ddd; border-radius: 5px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+    <a href="@(image)" target="_blank" style="text-decoration: none;">
+        <img src="@(image)" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;">
     </a>
-    <h3 class="card-title text-center" style="font-size: 1.25rem; margin-bottom: 10px;">@name</h3>
-    <div class="card-body" style="padding: 15px; display:flex;justify-content:space-evenly;align-items:center;">
-        <p>@price</p>
-        <button class="btn btn-success make-product">Make it a Product</button>
+    <div class="card-body text-center" style="padding: 15px; display: flex; flex-direction: column; justify-content: space-between;">
+        <h3 class="card-title" style="font-size: 1.25rem; margin-bottom: 10px;">@(name)</h3>
+        <p class="card-text" style="font-weight: bold; font-size: 1.1rem; margin-bottom: 15px;">@(price)</p>
+        <button class="btn btn-success make-product"
+                data-name="@name"
+                data-price="@price"
+                data-description="@description"
+                data-image="@image">
+            Make it a Product
+        </button>
     </div>
 </div>

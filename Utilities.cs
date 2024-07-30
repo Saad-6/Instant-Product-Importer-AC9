@@ -46,7 +46,7 @@ namespace TPIPlugin
                     var newPath = string.IsNullOrEmpty(currentPath) ? property.Name : $"{currentPath}.{property.Name}";
                     if (property.Name.Equals(findBy, StringComparison.OrdinalIgnoreCase))
                     {
-                        return currentPath; // Return the path 
+                        return currentPath; 
                     }
                     var result = FindNamePropertyPrefix(property.Value, newPath, findBy);
                     if (result != null)

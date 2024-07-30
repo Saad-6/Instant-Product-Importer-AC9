@@ -23,6 +23,7 @@
                         </div>
                     }
                 </div>
+
             </div>
         </div>
     </div>
@@ -50,11 +51,7 @@ else
         $(document).ready(function () {
             $(document).on('click', '.make-product', function () {
                 var name = $(this).data('name');
-                var sku = $(this).data('sku');
                 var price = $(this).data('price');
-                var cost = $(this).data('cost');
-                var unit = $(this).data('unit');
-                var category = $(this).data('category');
                 var description = $(this).data('description');
                 var image = $(this).data('image');
 
@@ -67,7 +64,7 @@ else
                 if (isChecked) {
                     $('#category').val($('#query').val());
                 } else {
-                    $('#category').val(category);
+                  
                 }
                 $('#addProductModal').modal('show');
             });
