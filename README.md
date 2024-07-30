@@ -21,7 +21,7 @@ Access the Plugin:
 
 **1.**  Navigate to TPI : Go to the Third Party Tab in the admin dashboard to access the TPI management interface.  
 **2.**  Define API URL:  
-    * Enter the API URL that you wish to consume.  
+     * Enter the API URL that you wish to consume.  
     * Map JSON Keys: Use the provided form to define the JSON keys for product attributes such as name, price, description, and image.
 Fetch and Map Data:  
 
