@@ -28,5 +28,3 @@ The Universal API Product Integrator is a powerful plugin that allows you to sea
 
 **4.** Add Products to Store: Use the mapped data to add new products to your store. The plugin will automatically map the entities and create categories if they do not exist.
 
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
