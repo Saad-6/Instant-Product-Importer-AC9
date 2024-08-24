@@ -1,7 +1,7 @@
 # Instant Product Importer Plugin For Ablecommerce-9
 
 ## Description
-The Universal API Product Integrator is a powerful plugin that allows you to seamlessly integrate products from various APIs into your store. With this plugin, you can define JSON key names for products, ensuring that products from any source are correctly mapped and handled within your store. This plugin supports consuming APIs from different providers, making it a versatile tool for product integration.
+The Instant Product Importer is a powerful plugin that allows you to seamlessly integrate products from various APIs into your store. With this plugin, you can define JSON key names for products, ensuring that products from any source are correctly mapped and handled within your store. This plugin supports consuming APIs from different providers, making it a versatile tool for product integration.
 
 ## Key Features
 * **Generic API Consumption**: Supports APIs from various providers by allowing custom JSON key definitions.
